@@ -16,6 +16,8 @@ int dirs = 0;
 int files = 0;
 int saved_bytes = 0;
 
+multiset exts_to_skip = (<"app", "framework", "svn">);
+
 mapping keys = ([]);
 mapping suspects = ([]);
 mapping true_dupes = ([]);
@@ -62,7 +64,7 @@ int dedupe(mapping config)
 		array y = sort(d);
 		script += ("# " + y[0] + "\n");
 		foreach(y[1..];; string f)
-		  script += ("rm " + f + "\n");
+		  script += ("rm \"" + f + "\"\n");
 		script +="\n";
 	}
 	
@@ -183,6 +185,15 @@ void scan(Filesystem.System fs)
 {
 	foreach(fs->get_dir();; string f)
 	{
+
+		// first, let's filter out directory types we want to skip, like bundles.
+		
+		array x = lower_case(f)/".";
+		if((sizeof(x)>1) && exts_to_skip[x[-1]])
+		{
+		  werror("skipping %s\n", f);
+		  continue;
+		}
 		Stdio.Stat stat = fs->stat(f, 1);
 		
 		if(!stat)
