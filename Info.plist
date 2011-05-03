@@ -7,9 +7,9 @@
 	<key>CFBundleExecutable</key>
 	<string>DupeFree</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${ribbonGeneratorVersion}, ${releaseType}</string>
+	<string>${dupeFreeVersion}, ${releaseType}</string>
 	<key>CFBundleVersion</key>
-	<string>${ribbonGeneratorVersion}</string>
+	<string>${dupeFreeVersion}</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.welliver.DupeFree</string>
 	<key>CFBundlePackageType</key>
