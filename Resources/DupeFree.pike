@@ -13,8 +13,8 @@ int main(int argc, array argv)
   NSApp->activateIgnoringOtherApps_(1);
   add_backend_to_runloop(Pike.DefaultBackend, 0.01);
 werror("path: %O\n", master()->pike_module_path);
-  return AppKit()->NSApplicationMain(argc, argv);
+ return AppKit()->NSApplicationMain(argc, argv);
   
-//return 0;
+return 0;
 }
 
