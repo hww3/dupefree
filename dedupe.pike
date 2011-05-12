@@ -62,7 +62,7 @@ int dedupe(mapping config)
     foreach(true_dupes;; array d)
 	{
 		array y = sort(d);
-		script += ("# " + y[0] + "\n");
+		script += ("#rm \"" + y[0] + "\"\n");
 		foreach(y[1..];; string f)
 		  script += ("rm \"" + f + "\"\n");
 		script +="\n";
