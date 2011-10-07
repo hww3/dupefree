@@ -18,6 +18,8 @@ int saved_bytes = 0;
 
 multiset exts_to_skip = (<"app", "framework", "svn">);
 
+multiset exts_to_skip = (<"app", "framework", "svn", "vob", "VOB">);
+multiset dirs_to_skip = (<"video_ts", "audio_ts">);
 mapping keys = ([]);
 mapping suspects = ([]);
 mapping true_dupes = ([]);
@@ -188,6 +190,11 @@ void scan(Filesystem.System fs)
 
 		// first, let's filter out directory types we want to skip, like bundles.
 		
+		if(sizeof(f) && dirs_to_skip[lower_case(f)])
+                {
+                  werror("skipping %s\n", f);
+                  continue;
+                }
 		array x = lower_case(f)/".";
 		if((sizeof(x)>1) && exts_to_skip[x[-1]])
 		{
@@ -225,9 +232,11 @@ void scan(Filesystem.System fs)
 }
 
 // start by comparing the first 1k of each file.
+// start by comparing the first 10k of each file.
 void consider(string path, Stdio.File f)
 {
 	string d = f->read(1024);
+	string d = f->read(1024*10);
 	string hash = Crypto.MD5()->hash(d);
 	
 //	werror("%O\n", hash);
